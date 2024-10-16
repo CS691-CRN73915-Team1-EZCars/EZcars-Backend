@@ -2,7 +2,11 @@ package com.rental.ezcars;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * @author Jitendra Rawat
+ */
 @SpringBootApplication
 public class EzcarsApplication {
 

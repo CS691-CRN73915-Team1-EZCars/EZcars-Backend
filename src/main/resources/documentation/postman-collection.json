@@ -36,7 +36,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users/2",
+							"raw": "http://localhost:8080/ezcars/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -45,7 +45,36 @@
 							"path": [
 								"ezcars",
 								"users",
-								"2"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"harsh\",\n  \"password\": \"securePassword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/ezcars/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"login"
 							]
 						}
 					},
@@ -79,7 +108,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"johndoe3\",\n  \"passwordHash\": \"securePassword123\",\n  \"email\": \"johndoe3@example.com\",\n  \"phoneNumber\": \"1234567890\",\n  \"role\": \"Customer\",\n  \"subscriptionStatus\": \"Normal\"\n}",
+							"raw": "{\n  \"username\": \"harsh\",\n  \"passwordHash\": \"securePassword123\",\n  \"email\": \"harsh@example.com\",\n  \"phoneNumber\": \"1234567890\",\n  \"role\": \"Customer\",\n  \"subscriptionStatus\": \"Normal\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,14 +116,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars",
+							"raw": "http://localhost:8080/ezcars/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"ezcars"
+								"ezcars",
+								"users"
 							]
 						}
 					},

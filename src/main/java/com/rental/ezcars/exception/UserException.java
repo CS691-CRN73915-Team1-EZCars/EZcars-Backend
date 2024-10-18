@@ -19,6 +19,7 @@ public class UserException extends RuntimeException {
         USER_CREATION_ERROR,
         USER_UPDATE_ERROR,
         USER_DELETION_ERROR,
-        NO_USERS_FOUND
+        NO_USERS_FOUND,
+        INVALID_CREDENTIALS
     }
 }

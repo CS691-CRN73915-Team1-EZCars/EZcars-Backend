@@ -1,6 +1,9 @@
 package com.rental.ezcars.entity;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +16,7 @@ public class User {
 
     @Column(unique = true, nullable = false, length = 50)
     private String username;
-
+    
     @Column(nullable = false)
     private String passwordHash;
 
@@ -124,4 +127,5 @@ public class User {
     public enum SubscriptionStatus {
         Subscribed, Normal
     }
+
 }

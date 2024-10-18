@@ -2,6 +2,7 @@ package com.rental.ezcars.controller;
 
 import com.rental.ezcars.entity.LoginRequest;
 import com.rental.ezcars.entity.User;
+import com.rental.ezcars.entity.AuthResponse;
 import com.rental.ezcars.impl.UserService;
 import com.rental.ezcars.utils.JwtUtil;
 
@@ -25,20 +26,14 @@ public class AuthController {
         User user = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (user != null) {
             String token = jwtUtil.generateToken(user.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getUserId()));
         }
         return ResponseEntity.badRequest().body("Invalid username or password");
     }
-}
-
-class AuthResponse {
-    private String token;
-
-    public AuthResponse(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
+    
+    @PostMapping("/signup")
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 }
+

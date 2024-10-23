@@ -1,5 +1,6 @@
 package com.rental.ezcars.controller;
 
+import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import com.rental.ezcars.exception.VehicleNotFoundException;
 import com.rental.ezcars.service.VehicleService;
@@ -21,6 +22,24 @@ public class VehicleController {
            @RequestParam(defaultValue = "0") int page,
            @RequestParam(defaultValue = "10") int size) {
        Page<Vehicle> vehicles = vehicleService.getAllVehicles(PageRequest.of(page, size));
+       return ResponseEntity.ok(vehicles);
+   }
+   
+   @GetMapping("/search")
+   public ResponseEntity<Page<Vehicle>> searchVehicles(
+           @RequestParam(required = false) String searchText,
+           @RequestParam(required = false) String make,
+           @RequestParam(required = false) String model,
+
+           @RequestParam(defaultValue = "0") int page,
+           @RequestParam(defaultValue = "10") int size) {
+       
+       VehicleSearchCriteria criteria = new VehicleSearchCriteria();
+       criteria.setSearchText(searchText);
+       criteria.setMake(make);
+       criteria.setModel(model);
+
+       Page<Vehicle> vehicles = vehicleService.searchVehicles(criteria, PageRequest.of(page, size));
        return ResponseEntity.ok(vehicles);
    }
 

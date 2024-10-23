@@ -1,4 +1,4 @@
-package com.rental.ezcars.entity;
+package com.rental.ezcars.dto;
 
 public class AuthResponse {
     private String token;

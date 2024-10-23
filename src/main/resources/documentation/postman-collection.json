@@ -237,6 +237,69 @@
 					"response": []
 				},
 				{
+					"name": "get Search Vehicles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYSIsImlhdCI6MTcyOTcwMDA5MSwiZXhwIjoxNzI5NzM2MDkxfQ.gEWuL_N3IKOiJJYtGxO3jlDgS2QoltKCxfAqahLnsE8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles",
+								"search"
+							],
+							"query": [
+								{
+									"key": "make",
+									"value": "Ford",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "1000",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "20000",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Available",
+									"disabled": true
+								},
+								{
+									"key": "searchText",
+									"value": "tesla",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "50000",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete Vehicle",
 					"request": {
 						"method": "DELETE",

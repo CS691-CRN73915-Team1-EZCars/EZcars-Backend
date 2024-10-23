@@ -1,4 +1,4 @@
-package com.rental.ezcars.entity;
+package com.rental.ezcars.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

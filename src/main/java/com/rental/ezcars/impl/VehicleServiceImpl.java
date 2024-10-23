@@ -1,9 +1,12 @@
 package com.rental.ezcars.impl;
 
+import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import com.rental.ezcars.exception.VehicleNotFoundException;
 import com.rental.ezcars.repository.VehicleRepository;
 import com.rental.ezcars.service.VehicleService;
+import com.rental.ezcars.specification.VehicleSpecification;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,16 @@ public class VehicleServiceImpl implements VehicleService {
     public Page<Vehicle> getAllVehicles(Pageable pageable) {
         return vehicleRepository.findAll(pageable);
     }
+    
+    @Override
+        public Page<Vehicle> searchVehicles(VehicleSearchCriteria criteria, Pageable pageable) {
+            if (criteria.getSearchText() != null && !criteria.getSearchText().isEmpty()) {
+                return vehicleRepository.fullTextSearch(criteria.getSearchText(), pageable);
+            } else {
+                return vehicleRepository.findAll(VehicleSpecification.searchVehicles(criteria), pageable);
+            }
+        }
+
 
     @Override
     public Optional<Vehicle> getVehicleById(Long vehicleId) {

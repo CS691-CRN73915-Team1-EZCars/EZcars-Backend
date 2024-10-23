@@ -1,8 +1,8 @@
 package com.rental.ezcars.controller;
 
-import com.rental.ezcars.entity.LoginRequest;
 import com.rental.ezcars.entity.User;
-import com.rental.ezcars.entity.AuthResponse;
+import com.rental.ezcars.dto.AuthResponse;
+import com.rental.ezcars.dto.LoginRequest;
 import com.rental.ezcars.impl.UserServiceImpl;
 import com.rental.ezcars.utils.JwtUtil;
 

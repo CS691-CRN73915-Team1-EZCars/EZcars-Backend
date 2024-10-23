@@ -3,6 +3,7 @@ package com.rental.ezcars.impl;
 import com.rental.ezcars.entity.User;
 import com.rental.ezcars.exception.UserException;
 import com.rental.ezcars.repository.UserRepository;
+import com.rental.ezcars.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,12 @@ import java.util.stream.Collectors;
  * @author Jitendra Rawat
  */
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) {
@@ -28,6 +30,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public User getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User not found with id: " + id,
@@ -37,6 +40,7 @@ public class UserService {
         return user;
     }
 
+    @Override
     public User createUser(User user) {
         try {
             return userRepository.save(user);
@@ -45,6 +49,7 @@ public class UserService {
         }
     }
     
+    @Override
     public User updateUser(Long id, User userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User not found with id: " + id, UserException.UserExceptionType.USER_NOT_FOUND));
@@ -61,6 +66,7 @@ public class UserService {
         }
     }
 
+    @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User not found with id: " + id, UserException.UserExceptionType.USER_NOT_FOUND));
@@ -72,6 +78,7 @@ public class UserService {
         }
     }
     
+    @Override
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserException("User not found with username: " + username, UserException.UserExceptionType.USER_NOT_FOUND));

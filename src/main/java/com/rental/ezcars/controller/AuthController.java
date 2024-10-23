@@ -3,7 +3,7 @@ package com.rental.ezcars.controller;
 import com.rental.ezcars.entity.LoginRequest;
 import com.rental.ezcars.entity.User;
 import com.rental.ezcars.entity.AuthResponse;
-import com.rental.ezcars.impl.UserService;
+import com.rental.ezcars.impl.UserServiceImpl;
 import com.rental.ezcars.utils.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private JwtUtil jwtUtil;

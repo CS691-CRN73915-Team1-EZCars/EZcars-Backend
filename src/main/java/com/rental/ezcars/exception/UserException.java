@@ -20,6 +20,10 @@ public class UserException extends RuntimeException {
         USER_UPDATE_ERROR,
         USER_DELETION_ERROR,
         NO_USERS_FOUND,
-        INVALID_CREDENTIALS
+        INVALID_CREDENTIALS,
+        EMAIL_ALREADY_EXISTS,
+        PHONE_NUMBER_ALREADY_EXISTS,
+        USERNAME_ALREADY_EXISTS,
+        DUPLICATE_ENTRY
     }
 }

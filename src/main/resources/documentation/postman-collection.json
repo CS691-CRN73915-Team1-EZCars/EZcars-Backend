@@ -54,6 +54,9 @@
 				{
 					"name": "login",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -116,7 +119,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users",
+							"raw": "http://localhost:8080/ezcars/signup",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -124,7 +127,7 @@
 							"port": "8080",
 							"path": [
 								"ezcars",
-								"users"
+								"signup"
 							]
 						}
 					},
@@ -155,6 +158,130 @@
 								"ezcars",
 								"users",
 								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "add Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYSIsImlhdCI6MTcyOTcwMDA5MSwiZXhwIjoxNzI5NzM2MDkxfQ.gEWuL_N3IKOiJJYtGxO3jlDgS2QoltKCxfAqahLnsE8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"Ford\",\n    \"model\": \"F-160\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Electric\",\n    \"price\": 4999,\n    \"mileage\": 50,\n    \"imageUrl\": \"car4.webp\",\n    \"details\": \"Includes premium sound system and all-glass roof.\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get vehicle by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Vehicles",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"Ford\",\n    \"model\": \"F-160\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Electric\",\n    \"price\": 4999,\n    \"mileage\": 50,\n    \"imageUrl\": \"car4.webp\",\n    \"details\": \"Includes premium sound system and all-glass roof.\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles",
+								"1"
 							]
 						}
 					},

@@ -46,4 +46,10 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+
+    @ExceptionHandler(VehicleNotFoundException.class)
+    public ResponseEntity<?> handleVehicleNotFoundException(VehicleNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

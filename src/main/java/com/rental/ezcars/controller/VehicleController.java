@@ -30,6 +30,9 @@ public class VehicleController {
            @RequestParam(required = false) String searchText,
            @RequestParam(required = false) String make,
            @RequestParam(required = false) String model,
+           @RequestParam(required = false) Integer year,
+           @RequestParam(required = false) Double minPrice,
+           @RequestParam(required = false) Double maxPrice,
 
            @RequestParam(defaultValue = "0") int page,
            @RequestParam(defaultValue = "10") int size) {
@@ -38,6 +41,9 @@ public class VehicleController {
        criteria.setSearchText(searchText);
        criteria.setMake(make);
        criteria.setModel(model);
+       criteria.setYear(year);
+       criteria.setMinPrice(minPrice);
+       criteria.setMaxPrice(maxPrice);
 
        Page<Vehicle> vehicles = vehicleService.searchVehicles(criteria, PageRequest.of(page, size));
        return ResponseEntity.ok(vehicles);

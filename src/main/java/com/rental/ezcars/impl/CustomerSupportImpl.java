@@ -41,10 +41,6 @@ public class CustomerSupportImpl implements CustomerSupportService {
         if (existingTicket.isPresent()) {
             CustomerSupport ticket = existingTicket.get();
             ticket.setStatus(updatedTicket.getStatus());
-            ticket.setDescription(updatedTicket.getDescription());
-            ticket.setCustomerName(updatedTicket.getCustomerName());
-            ticket.setCustomerEmail(updatedTicket.getCustomerEmail());
-            ticket.setPriority(updatedTicket.getPriority());
             ticket.setResolution(updatedTicket.getResolution());
             ticket.setUpdatedDate(LocalDateTime.now());
             return customerSupportRepository.save(ticket);

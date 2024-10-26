@@ -123,10 +123,10 @@ public class CustomerSupport {
     }
 
 	public enum TicketStatus {
-	    OPEN, RESOLVED, CLOSED
+	    OPEN, CLOSED
 	}
 
 	public enum TicketPriority {
-	    LOW, MEDIUM, HIGH, URGENT
+	    LOW, MEDIUM, HIGH
 	}
 }

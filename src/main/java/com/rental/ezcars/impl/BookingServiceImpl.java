@@ -42,13 +42,12 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + bookingId));
 
-        // Update fields
-        booking.setUserId(bookingDetails.getUserId());
         booking.setVehicleId(bookingDetails.getVehicleId());
-        booking.setStartTime(bookingDetails.getStartTime());
-        booking.setEndTime(bookingDetails.getEndTime());
-        // Add any other fields that need to be updated
-
+        booking.setPickUpDate(bookingDetails.getPickUpDate());
+        booking.setDuration(bookingDetails.getDuration());
+        booking.setPickupLocation(bookingDetails.getPickupLocation());
+        booking.setDropoffLocation(bookingDetails.getDropoffLocation());
+        booking.setStatus(bookingDetails.getStatus());
         return bookingRepository.save(booking);
     }
 

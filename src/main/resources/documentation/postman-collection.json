@@ -550,7 +550,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": 1,\n    \"vehicleId\": 2,\n    \"startTime\": \"2024-11-01T10:00:00\",\n    \"endTime\": \"2024-11-05T10:00:00\"\n}",
+							"raw": "{\n  \"userId\": 1,\n  \"vehicleId\": 6,\n  \"pickUpDate\": \"2024-11-16\",\n  \"duration\": 36,\n  \"pickupLocation\": \"Airport Terminal 3\",\n  \"dropoffLocation\": \"Downtown Car Rental Office\"\n  \"status\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -618,6 +618,15 @@
 						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": 6,\n  \"pickUpDate\": \"2024-11-16\",\n  \"duration\": 36,\n  \"pickupLocation\": \"Airport Terminal 3\",\n  \"dropoffLocation\": \"Downtown Car Rental Office\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/ezcars/bookings/",
 							"protocol": "http",

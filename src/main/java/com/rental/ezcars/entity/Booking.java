@@ -5,29 +5,29 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "bookings")
+@Table(name = "Bookings")
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(nullable = false)
     private Long userId;
 
-    @Column(name = "vehicle_id", nullable = false)
+    @Column(nullable = false)
     private Long vehicleId;
 
-    @Column(name = "pick_up_date", nullable = false)
+    @Column(nullable = false)
     private LocalDate pickUpDate;
 
     @Column(nullable = false)
     private Integer duration;
 
-    @Column(name = "pickup_location", nullable = false)
+    @Column(nullable = false)
     private String pickupLocation;
 
-    @Column(name = "dropoff_location", nullable = false)
+    @Column(nullable = false)
     private String dropoffLocation;
     
     @Enumerated(EnumType.STRING)

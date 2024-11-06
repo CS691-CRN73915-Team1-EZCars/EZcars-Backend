@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customer_support")
+@Table(name = "CustomerSupport")
 public class CustomerSupport {
 
     @Id
@@ -14,7 +14,7 @@ public class CustomerSupport {
     private Long customerId;
 
     @Enumerated(EnumType.STRING)
-    private TicketStatus status = TicketStatus.OPEN; // Default status
+    private TicketStatus status = TicketStatus.OPEN;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -35,12 +35,11 @@ public class CustomerSupport {
 
     // Constructor
     public CustomerSupport() {
-        this.status = TicketStatus.OPEN; // Ensure status defaults to OPEN
+        this.status = TicketStatus.OPEN;
         this.createdDate = LocalDateTime.now();
         this.updatedDate = LocalDateTime.now();
     }
 
-    // Getters and setters
 
     public Long getTicketId() {
         return ticketId;

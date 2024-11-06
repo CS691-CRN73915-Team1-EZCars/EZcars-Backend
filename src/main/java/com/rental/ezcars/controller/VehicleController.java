@@ -20,7 +20,7 @@ public class VehicleController {
    @GetMapping
    public ResponseEntity<Page<Vehicle>> getAllVehicles(
            @RequestParam(defaultValue = "0") int page,
-           @RequestParam(defaultValue = "10") int size) {
+           @RequestParam(defaultValue = "200") int size) {
        Page<Vehicle> vehicles = vehicleService.getAllVehicles(PageRequest.of(page, size));
        return ResponseEntity.ok(vehicles);
    }

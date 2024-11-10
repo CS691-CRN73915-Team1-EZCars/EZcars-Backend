@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customer_support")
+@Table(name = "SupportTicket")
 public class CustomerSupport {
 
     @Id
@@ -14,19 +14,17 @@ public class CustomerSupport {
     private Long customerId;
 
     @Enumerated(EnumType.STRING)
-    private TicketStatus status = TicketStatus.OPEN; // Default status
+    private TicketStatus status = TicketStatus.OPEN;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     
-    private LocalDateTime updatedDate;
+    private LocalDateTime updatedAt;
 
     private String customerName;
     
-    private String customerEmail;
-
     @Enumerated(EnumType.STRING)
     private TicketPriority priority;
 
@@ -35,12 +33,11 @@ public class CustomerSupport {
 
     // Constructor
     public CustomerSupport() {
-        this.status = TicketStatus.OPEN; // Ensure status defaults to OPEN
-        this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
+        this.status = TicketStatus.OPEN;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and setters
 
     public Long getTicketId() {
         return ticketId;
@@ -75,19 +72,19 @@ public class CustomerSupport {
     }
 
     public LocalDateTime getCreatedDate() {
-        return createdDate;
+        return createdAt;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+        this.createdAt = createdDate;
     }
 
     public LocalDateTime getUpdatedDate() {
-        return updatedDate;
+        return updatedAt;
     }
 
     public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
+        this.updatedAt = updatedDate;
     }
 
     public String getCustomerName() {
@@ -98,13 +95,6 @@ public class CustomerSupport {
         this.customerName = customerName;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
 
     public TicketPriority getPriority() {
         return priority;

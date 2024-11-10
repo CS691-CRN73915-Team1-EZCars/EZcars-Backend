@@ -19,14 +19,12 @@ public class CustomerSupport {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     
-    private LocalDateTime updatedDate;
+    private LocalDateTime updatedAt;
 
     private String customerName;
     
-    private String customerEmail;
-
     @Enumerated(EnumType.STRING)
     private TicketPriority priority;
 
@@ -36,8 +34,8 @@ public class CustomerSupport {
     // Constructor
     public CustomerSupport() {
         this.status = TicketStatus.OPEN;
-        this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
 
@@ -74,19 +72,19 @@ public class CustomerSupport {
     }
 
     public LocalDateTime getCreatedDate() {
-        return createdDate;
+        return createdAt;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+        this.createdAt = createdDate;
     }
 
     public LocalDateTime getUpdatedDate() {
-        return updatedDate;
+        return updatedAt;
     }
 
     public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
+        this.updatedAt = updatedDate;
     }
 
     public String getCustomerName() {
@@ -97,13 +95,6 @@ public class CustomerSupport {
         this.customerName = customerName;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
 
     public TicketPriority getPriority() {
         return priority;

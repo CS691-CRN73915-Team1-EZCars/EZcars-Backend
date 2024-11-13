@@ -257,6 +257,27 @@
 					"response": []
 				},
 				{
+					"name": "get makes-and-models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ezcars/vehicles/makes-and-models",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ezcars",
+								"vehicles",
+								"makes-and-models"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get Search Vehicles",
 					"request": {
 						"auth": {
@@ -611,7 +632,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTExNjMxMSwiZXhwIjoxNzMxMTUyMzExfQ.QKRlRL7ZdhdSxxFYupRunIrnloten6P5Mpvkn8nFWb8",
 									"type": "string"
 								}
 							]
@@ -620,7 +641,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"vehicleId\": 6,\n  \"pickUpDate\": \"2024-11-16\",\n  \"duration\": 36,\n  \"pickupLocation\": \"Airport Terminal 3\",\n  \"dropoffLocation\": \"Downtown Car Rental Office\"\n}",
+							"raw": "{\n    \"userId\": 3,\n    \"vehicleId\": 9,\n    \"pickUpDate\": \"2024-11-08\",\n    \"duration\": 12,\n    \"pickupLocation\": \"New York\",\n    \"dropoffLocation\": \"New York\",\n    \"status\": \"CONFIRMED\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -628,7 +649,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/",
+							"raw": "http://localhost:8080/ezcars/bookings/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -637,7 +658,7 @@
 							"path": [
 								"ezcars",
 								"bookings",
-								""
+								"1"
 							]
 						}
 					},
@@ -682,7 +703,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTUxNzkyMiwiZXhwIjoxNzMxNTUzOTIyfQ.78NgsrncserSylzYB4j3xoexPbO0bUygaaMRohAZIHQ",
 									"type": "string"
 								}
 							]
@@ -690,8 +711,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/user/",
-							"protocol": "http",
+							"raw": "GET http://localhost:8080/ezcars/bookings/user/1?sortDirection=desc",
+							"protocol": "GET http",
 							"host": [
 								"localhost"
 							],
@@ -700,7 +721,33 @@
 								"ezcars",
 								"bookings",
 								"user",
-								""
+								"1"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "CONFIRMED",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "2024",
+									"disabled": true
+								},
+								{
+									"key": "month",
+									"value": "7",
+									"disabled": true
+								},
+								{
+									"key": "sortDirection",
+									"value": "desc"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},

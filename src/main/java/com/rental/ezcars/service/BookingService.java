@@ -15,7 +15,8 @@ public interface BookingService {
     Booking createBooking(Booking booking);
     Booking updateBooking(Long bookingId, Booking bookingDetails);
     void deleteBooking(Long bookingId);
-    List<Booking> getAllBookingsByUserId(Long userId);
+  
+    List<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection);
     
     void sendConfirmationEmail(Booking booking) throws EmailSendException, UserException;
     

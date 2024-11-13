@@ -10,9 +10,13 @@ import com.rental.ezcars.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,8 +110,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getAllBookingsByUserId(Long userId) {
-        List<Booking> bookings = bookingRepository.findAllByUserId(userId);
+    public List<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection) {
+        Sort sort = Sort.by(sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, "pickUpDate");
+        
+        List<Booking> bookings = bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, sort);
+        
         if (bookings.isEmpty()) {
             throw new ResourceNotFoundException("No bookings found for user id: " + userId);
         }
@@ -148,13 +155,35 @@ public class BookingServiceImpl implements BookingService {
     
     @Override
     public void sendReminderEmail(Booking booking) throws EmailSendException {
+        Optional<Vehicle> bookedVehicle = vehicleService.getVehicleById(booking.getVehicleId());
         String subject = "Reminder: Your EZCars Booking #" + booking.getId();
-        String body = "This is a reminder for your upcoming booking with EZCars:\n" +
-                "Booking ID: " + booking.getId() + "\n" +
-                "Start Date: " + booking.getPickUpDate() + "\n" +
-                "Pick Up Location: " + booking.getPickupLocation();
+        
+        StringBuilder body = new StringBuilder();
+        body.append("This is a reminder for your upcoming booking with EZCars. Your booking details:\n")
+            .append("Booking ID: ").append(booking.getId()).append("\n")
+            .append("Start Date: ").append(booking.getPickUpDate()).append("\n")
+            .append("Pick Up Location: ").append(booking.getPickupLocation()).append("\n");
 
-        emailService.sendEmail(userMailId, subject, body);
+        double totalPrice = 0.0;
+        if (bookedVehicle.isPresent()) {
+            Vehicle vehicle = bookedVehicle.get();
+            body.append("Vehicle Details:\n")
+                .append("  Make: ").append(vehicle.getMake()).append("\n")
+                .append("  Model: ").append(vehicle.getModel()).append("\n")
+                .append("  Year: ").append(vehicle.getYear()).append("\n\n");
+            
+            // Calculate total price
+            totalPrice = vehicle.getPrice() * booking.getDuration();
+            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
+                .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
+        } 
+
+        body.append("If you need to make any changes to your booking, please contact our customer service.\n\n")
+            .append("We look forward to serving you soon. Thank you for choosing EZCars!");
+
+        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
+        
+        emailService.sendEmail(userMailId, subject, body.toString());
     }
     
     
@@ -163,5 +192,36 @@ public class BookingServiceImpl implements BookingService {
             booking.setStatus(status);
             bookingRepository.save(booking);
         });
+    }
+    
+   @Scheduled(cron = "0 0 10 * * ?") // Runs every day at 10:00 AM
+    public void sendReminderEmailsForUpcomingBookings() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        System.out.println(tomorrow.toString());
+        int pageSize = 500;
+        int pageNumber = 0;
+        Page<Booking> bookingPage;
+
+        do {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            try {
+                bookingPage = getAllBookings(pageable);
+            } catch (ResourceNotFoundException e) {
+                // No more bookings found, exit the loop
+                break;
+            }
+
+            for (Booking booking : bookingPage.getContent()) {
+                if (booking.getPickUpDate().isEqual(tomorrow)) {
+                    try {
+                        sendReminderEmail(booking);
+          
+                    } catch (EmailSendException e) {
+                    }
+                }
+            }
+
+            pageNumber++;
+        } while (bookingPage.hasNext());
     }
 }

@@ -1,5 +1,6 @@
 package com.rental.ezcars.service;
 
+import com.rental.ezcars.dto.MakeModelDTO;
 import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,6 @@ public interface VehicleService {
    
    
    Page<Vehicle> searchVehicles(VehicleSearchCriteria criteria, Pageable pageable);
+   
+   MakeModelDTO getMakesAndModels();
 }

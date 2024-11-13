@@ -1,5 +1,6 @@
 package com.rental.ezcars.controller;
 
+import com.rental.ezcars.dto.MakeModelDTO;
 import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import com.rental.ezcars.exception.VehicleNotFoundException;
@@ -73,5 +74,11 @@ public class VehicleController {
    public ResponseEntity<?> deleteVehicle(@PathVariable Long vehicleId) {
        vehicleService.deleteVehicle(vehicleId);
        return ResponseEntity.ok().build();
+   }
+   
+   @GetMapping("/makes-and-models")
+   public ResponseEntity<MakeModelDTO> getMakesAndModels() {
+       MakeModelDTO makeModelDTO = vehicleService.getMakesAndModels();
+       return ResponseEntity.ok(makeModelDTO);
    }
 }

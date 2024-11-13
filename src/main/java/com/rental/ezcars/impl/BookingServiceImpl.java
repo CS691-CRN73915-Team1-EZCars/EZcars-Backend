@@ -115,9 +115,9 @@ public class BookingServiceImpl implements BookingService {
         
         List<Booking> bookings = bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, sort);
         
-        if (bookings.isEmpty()) {
-            throw new ResourceNotFoundException("No bookings found for user id: " + userId);
-        }
+//        if (bookings.isEmpty()) {
+//            throw new ResourceNotFoundException("No bookings found for user id: " + userId);
+//        }
         return bookings;
     }
     

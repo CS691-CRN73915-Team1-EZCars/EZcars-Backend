@@ -48,14 +48,15 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getAllBookingsByUserId(
+    public ResponseEntity<Page<Booking>> getAllBookingsByUserId(
             @PathVariable Long userId,
             @RequestParam(required = false) Booking.BookingStatus status,
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) Integer month,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        
-        List<Booking> bookings = bookingService.getAllBookingsByUserId(userId, status, year, month, sortDirection);
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {   
+        Page<Booking> bookings = bookingService.getAllBookingsByUserId(userId, status, year, month, sortDirection, page, size);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
     

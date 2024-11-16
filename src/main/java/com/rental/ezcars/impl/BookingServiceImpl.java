@@ -110,15 +110,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection) {
+    public Page<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection, int page, int size) {
         Sort sort = Sort.by(sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, "pickUpDate");
+        Pageable pageable = PageRequest.of(page, size, sort);
         
-        List<Booking> bookings = bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, sort);
-        
-//        if (bookings.isEmpty()) {
-//            throw new ResourceNotFoundException("No bookings found for user id: " + userId);
-//        }
-        return bookings;
+        return bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, pageable);
     }
     
     @Override

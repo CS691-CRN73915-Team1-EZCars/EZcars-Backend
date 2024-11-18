@@ -1,13 +1,12 @@
 package com.rental.ezcars.service;
 
 import com.rental.ezcars.entity.Booking;
+import com.rental.ezcars.entity.Booking.BookingStatus;
 import com.rental.ezcars.exception.EmailSendException;
 import com.rental.ezcars.exception.UserException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface BookingService {
     Page<Booking> getAllBookings(Pageable pageable);
@@ -21,4 +20,6 @@ public interface BookingService {
     void sendConfirmationEmail(Booking booking) throws EmailSendException, UserException;
     
     void sendReminderEmail(Booking booking) throws EmailSendException, UserException;
+    
+    Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status);
 }

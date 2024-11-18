@@ -1,7 +1,5 @@
 package com.rental.ezcars.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.rental.ezcars.dto.BookingStatusRequest;
 import com.rental.ezcars.entity.Booking;
+import com.rental.ezcars.entity.Booking.BookingStatus;
 import com.rental.ezcars.service.BookingService;
 
 @RestController
@@ -38,6 +38,12 @@ public class BookingController {
     @PutMapping("/{bookingId}")
     public ResponseEntity<Booking> updateBooking(@PathVariable Long bookingId, @RequestBody Booking booking) {
         Booking updatedBooking = bookingService.updateBooking(bookingId, booking);
+        return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
+    }
+   
+    @PutMapping("/{bookingId}/status")
+    public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long bookingId, @RequestBody BookingStatusRequest statusRequest) {
+        Booking updatedBooking = bookingService.updateBookingStatus(bookingId, statusRequest.getStatus());
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
 

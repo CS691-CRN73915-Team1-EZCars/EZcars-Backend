@@ -24,6 +24,7 @@ public class UserController {
 	    public ResponseEntity<User> getUserById(@PathVariable Long id) {
 	        User user = userService.getUserById(id);
 	        if (user != null) {
+	        	  user.setPasswordHash("XXXXXXXX");
 	            return ResponseEntity.ok(user);
 	        }
 	        return ResponseEntity.notFound().build();

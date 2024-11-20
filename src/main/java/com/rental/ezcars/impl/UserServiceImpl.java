@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User not found with id: " + id,
                 		UserException.UserExceptionType.USER_NOT_FOUND));
-        user.setPasswordHash("XXXXXXXX");
         
         return user;
     }

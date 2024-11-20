@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException("User not found with id: " + id,
                 		UserException.UserExceptionType.USER_NOT_FOUND));
-        user.setPasswordHash(null);
+        user.setPasswordHash("XXXXXXXX");
         
         return user;
     }
@@ -100,8 +100,7 @@ public class UserServiceImpl implements UserService {
         sanitizedUser.setSubscriptionStatus(user.getSubscriptionStatus());
         sanitizedUser.setCreatedAt(user.getCreatedAt());
         sanitizedUser.setUpdatedAt(user.getUpdatedAt());
-        // Set password to null
-        sanitizedUser.setPasswordHash(null);
+        sanitizedUser.setPasswordHash("XXXXXXXX");
         return sanitizedUser;
     }
 }

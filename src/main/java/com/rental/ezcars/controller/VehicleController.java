@@ -1,6 +1,7 @@
 package com.rental.ezcars.controller;
 
 import com.rental.ezcars.dto.MakeModelDTO;
+import com.rental.ezcars.dto.VehicleDTO;
 import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import com.rental.ezcars.exception.VehicleNotFoundException;
@@ -19,15 +20,15 @@ public class VehicleController {
    private VehicleService vehicleService;
 
    @GetMapping
-   public ResponseEntity<Page<Vehicle>> getAllVehicles(
+   public ResponseEntity<Page<VehicleDTO>> getAllVehicles(
            @RequestParam(defaultValue = "0") int page,
            @RequestParam(defaultValue = "200") int size) {
-       Page<Vehicle> vehicles = vehicleService.getAllVehicles(PageRequest.of(page, size));
+       Page<VehicleDTO> vehicles = vehicleService.getAllVehicles(PageRequest.of(page, size));
        return ResponseEntity.ok(vehicles);
    }
    
    @GetMapping("/search")
-   public ResponseEntity<Page<Vehicle>> searchVehicles(
+   public ResponseEntity<Page<VehicleDTO>> searchVehicles(
            @RequestParam(required = false) String searchText,
            @RequestParam(required = false) String make,
            @RequestParam(required = false) String model,
@@ -46,7 +47,7 @@ public class VehicleController {
        criteria.setMinPrice(minPrice);
        criteria.setMaxPrice(maxPrice);
 
-       Page<Vehicle> vehicles = vehicleService.searchVehicles(criteria, PageRequest.of(page, size));
+       Page<VehicleDTO> vehicles = vehicleService.searchVehicles(criteria, PageRequest.of(page, size));
        return ResponseEntity.ok(vehicles);
    }
 

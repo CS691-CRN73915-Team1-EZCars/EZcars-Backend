@@ -1,6 +1,7 @@
 package com.rental.ezcars.service;
 
 import com.rental.ezcars.dto.MakeModelDTO;
+import com.rental.ezcars.dto.VehicleDTO;
 import com.rental.ezcars.dto.VehicleSearchCriteria;
 import com.rental.ezcars.entity.Vehicle;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface VehicleService {
-   Page<Vehicle> getAllVehicles(Pageable pageable);
+   Page<VehicleDTO> getAllVehicles(Pageable pageable);
    
    Optional<Vehicle> getVehicleById(Long vehicleId);
    
@@ -20,7 +21,7 @@ public interface VehicleService {
    void deleteVehicle(Long vehicleId);
    
    
-   Page<Vehicle> searchVehicles(VehicleSearchCriteria criteria, Pageable pageable);
+   Page<VehicleDTO> searchVehicles(VehicleSearchCriteria criteria, Pageable pageable);
    
    MakeModelDTO getMakesAndModels();
 }

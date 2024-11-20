@@ -25,21 +25,15 @@ public class RatingServiceImpl implements RatingService {
     private UserService userService;
 
     public Rating createRating(Rating rating) {
-        try {
-            if (rating == null) {
-                throw new IllegalArgumentException("Rating cannot be null");
-            }
-            if (rating.getUserId() != null) {
-                User user = userService.getUserById(rating.getUserId());
-                if (user == null) {
-                    throw new UserException("User not found with id: " + rating.getUserId(), UserException.UserExceptionType.USER_NOT_FOUND);
-                }
-            }
-            return ratingRepository.save(rating);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error while creating rating: " + e.getMessage(), e);
+        if (rating == null) {
+            throw new IllegalArgumentException("Rating cannot be null");
         }
+
+        User user = userService.getUserById(rating.getUserId());
+        if (user == null) {
+            throw new UserException("User not found with id: " + rating.getUserId(), UserException.UserExceptionType.USER_NOT_FOUND);
+        }
+        return ratingRepository.save(rating);
     }
 
 

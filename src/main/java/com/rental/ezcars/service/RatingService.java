@@ -1,5 +1,6 @@
 package com.rental.ezcars.service;
 
+import com.rental.ezcars.dto.RatingDTO;
 import com.rental.ezcars.entity.Rating;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface RatingService {
 
     Optional<Rating> getRatingById(Long id);
 
-    List<Rating> getAllRatingsByVehicleId(Long vehicleId);
+    List<RatingDTO> getAllRatingsByVehicleId(Long vehicleId);
 
     Rating updateRating(Long id, Rating ratingDetails);
 

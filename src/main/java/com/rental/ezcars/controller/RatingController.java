@@ -1,5 +1,6 @@
 package com.rental.ezcars.controller;
 
+import com.rental.ezcars.dto.RatingDTO;
 import com.rental.ezcars.entity.Rating;
 import com.rental.ezcars.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class RatingController {
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public ResponseEntity<List<Rating>> getAllRatingsByVehicleId(@PathVariable Long vehicleId) {
-        List<Rating> ratings = ratingService.getAllRatingsByVehicleId(vehicleId);
+    public ResponseEntity<List<RatingDTO>> getAllRatingsByVehicleId(@PathVariable Long vehicleId) {
+        List<RatingDTO> ratings = ratingService.getAllRatingsByVehicleId(vehicleId);
         return new ResponseEntity<>(ratings, HttpStatus.OK);
     }
 

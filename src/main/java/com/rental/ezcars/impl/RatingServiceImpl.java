@@ -1,20 +1,32 @@
 package com.rental.ezcars.impl;
 
+import com.rental.ezcars.dto.RatingDTO;
+import com.rental.ezcars.dto.VehicleDTO;
 import com.rental.ezcars.entity.Rating;
+import com.rental.ezcars.entity.User;
+import com.rental.ezcars.entity.Vehicle;
 import com.rental.ezcars.repository.RatingRepository;
 import com.rental.ezcars.service.RatingService;
+import com.rental.ezcars.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingRepository ratingRepository;
+    
+    @Autowired
+    private UserService userService;
 
     @Override
     public Rating createRating(Rating rating) {
@@ -27,9 +39,26 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<Rating> getAllRatingsByVehicleId(Long vehicleId) {
-        return ratingRepository.findByVehicleId(vehicleId);
+    public List<RatingDTO> getAllRatingsByVehicleId(Long vehicleId) {
+        List<Rating> ratings = ratingRepository.findByVehicleId(vehicleId);
+        List<RatingDTO> ratingDTOs = new ArrayList<>();
+
+        for (Rating rating : ratings) {
+            RatingDTO dto = convertToDTO(rating);
+           
+            if (rating.getUserId() != null) {
+                User user = userService.getUserById(rating.getUserId()); 
+                if (user != null) {
+                    dto.setUserName(user.getUsername());
+                }
+            }
+            
+            ratingDTOs.add(dto);
+        }
+
+        return ratingDTOs;
     }
+    
 
     @Override
     public Rating updateRating(Long id, Rating ratingDetails) {
@@ -47,4 +76,20 @@ public class RatingServiceImpl implements RatingService {
     public void deleteRating(Long id) {
         ratingRepository.deleteById(id);
     }
+    
+    
+    private RatingDTO convertToDTO(Rating rating) {
+        RatingDTO dto = new RatingDTO();
+        
+        dto.setRatingId(rating.getRatingId());
+        dto.setVehicleId(rating.getVehicleId());
+        dto.setUserId(rating.getUserId());
+        dto.setRating(rating.getRating());
+        dto.setReview(rating.getReview());
+        dto.setCreatedAt(rating.getCreatedAt()); 
+        dto.setUpdatedAt(rating.getUpdatedAt()); 
+
+        return dto;
+    }
+   
 }

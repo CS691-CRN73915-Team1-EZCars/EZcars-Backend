@@ -57,22 +57,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(Booking booking) {
-    	Booking savedBooking = bookingRepository.save(booking);
-    	   taskExecutor.execute(() -> {
-    	        try {
-    	            sendConfirmationEmail(savedBooking);
-    	            try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-    	            updateBookingStatus(savedBooking.getId(), BookingStatus.CONFIRMED);
-    	        } catch (EmailSendException e) {
-			e.printStackTrace();
-		}
-    	   });
-
-    	    return savedBooking;
+    	  
+    	    return bookingRepository.save(booking);
     }
 
     @Override
@@ -110,15 +96,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection) {
+    public Page<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection, int page, int size) {
         Sort sort = Sort.by(sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, "pickUpDate");
+        Pageable pageable = PageRequest.of(page, size, sort);
         
-        List<Booking> bookings = bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, sort);
-        
-//        if (bookings.isEmpty()) {
-//            throw new ResourceNotFoundException("No bookings found for user id: " + userId);
-//        }
-        return bookings;
+        return bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, pageable);
     }
     
     @Override
@@ -185,13 +167,23 @@ public class BookingServiceImpl implements BookingService {
         
         emailService.sendEmail(userMailId, subject, body.toString());
     }
+ 
     
-    
-    public void updateBookingStatus(Long bookingId, BookingStatus status) {
-        bookingRepository.findById(bookingId).ifPresent(booking -> {
-            booking.setStatus(status);
-            bookingRepository.save(booking);
+    @Override
+    public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
+        Booking booking = getBookingById(bookingId);
+        booking.setStatus(status);
+        bookingRepository.save(booking);
+        taskExecutor.execute(() -> {
+            try {
+                sendConfirmationEmail(booking);
+               
+            } catch (EmailSendException e) {
+                e.printStackTrace();
+            }
         });
+        
+        return booking;
     }
     
    @Scheduled(cron = "0 0 10 * * ?") // Runs every day at 10:00 AM

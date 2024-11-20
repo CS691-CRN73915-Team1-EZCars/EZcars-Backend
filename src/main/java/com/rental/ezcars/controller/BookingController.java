@@ -1,7 +1,5 @@
 package com.rental.ezcars.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.rental.ezcars.dto.BookingStatusRequest;
 import com.rental.ezcars.entity.Booking;
+import com.rental.ezcars.entity.Booking.BookingStatus;
 import com.rental.ezcars.service.BookingService;
 
 @RestController
@@ -40,6 +40,12 @@ public class BookingController {
         Booking updatedBooking = bookingService.updateBooking(bookingId, booking);
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
+   
+    @PutMapping("/{bookingId}/status")
+    public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long bookingId, @RequestBody BookingStatusRequest statusRequest) {
+        Booking updatedBooking = bookingService.updateBookingStatus(bookingId, statusRequest.getStatus());
+        return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
+    }
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<Booking> getBooking(@PathVariable Long bookingId) {
@@ -48,14 +54,15 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getAllBookingsByUserId(
+    public ResponseEntity<Page<Booking>> getAllBookingsByUserId(
             @PathVariable Long userId,
             @RequestParam(required = false) Booking.BookingStatus status,
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) Integer month,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        
-        List<Booking> bookings = bookingService.getAllBookingsByUserId(userId, status, year, month, sortDirection);
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {   
+        Page<Booking> bookings = bookingService.getAllBookingsByUserId(userId, status, year, month, sortDirection, page, size);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
     

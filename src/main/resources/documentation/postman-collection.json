@@ -12,19 +12,28 @@
 				{
 					"name": "Get all users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTIwMjAxNywiZXhwIjoxNzMxMjM4MDE3fQ.r9ZjUyRlmo0uyeRT5Ue_b9mwn0Roqpf_-VfsjYIZ7-Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users/2",
+							"raw": "http://localhost:8082/ezcars/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
-								"users",
-								"2"
+								"users"
 							]
 						}
 					},
@@ -38,7 +47,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTA4NDQ3MCwiZXhwIjoxNzMxMTIwNDcwfQ.vVPRZamzkkoI1Hwt8huLcWaIiXaRjFwbmnT2hnKUVAU",
 									"type": "string"
 								}
 							]
@@ -46,16 +55,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users/2",
+							"raw": "http://localhost:8082/ezcars/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -79,12 +88,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/login",
+							"raw": "http://localhost:8082/ezcars/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"login"
@@ -96,19 +105,29 @@
 				{
 					"name": "delete user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTcyOTk4MDEwOSwiZXhwIjoxNzMwMDE2MTA5fQ.7Ft9NvQXAKDzOZfe48_GEL_YSJaenOd_3Po0StWJzTA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users/2",
+							"raw": "http://localhost:8082/ezcars/users/8",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"users",
-								"2"
+								"8"
 							]
 						}
 					},
@@ -146,11 +165,21 @@
 				{
 					"name": "Update User",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTExNjMxMSwiZXhwIjoxNzMxMTUyMzExfQ.QKRlRL7ZdhdSxxFYupRunIrnloten6P5Mpvkn8nFWb8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"johndoe222\",\n \"passwordHash\": \"securePassword123\",\n  \"email\": \"johndoe2@example.com\",\n  \"phoneNumber\": \"1234567890\",\n  \"role\": \"Customer\",\n  \"subscriptionStatus\": \"Normal\"\n}",
+							"raw": "{\n    \"email\": \"jitendra.rawat.15nov@gmail.com\",\n    \"phoneNumber\": \"5555555544\",\n    \"username\": \"jitendra.rawat\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -158,16 +187,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/users/7",
+							"raw": "http://localhost:8082/ezcars/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"users",
-								"7"
+								"1"
 							]
 						}
 					},
@@ -186,7 +215,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDA2Mjk5NiwiZXhwIjoxNzMwMDk4OTk2fQ.g_iTjS07G_bA-JMIWnS5NyxVvjwkaUtNjqvv8upoAWM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDQwMjc5MiwiZXhwIjoxNzMwNDM4NzkyfQ.50Bslz269NGwF-kBuMHiNTreXt13hmcAsKZiRiK0AFg",
 									"type": "string"
 								}
 							]
@@ -195,7 +224,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\n    \"make\": \"Hyundai\",\n    \"model\": \"Tucson\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Hybrid\",\n    \"price\": 290,\n    \"mileage\": 38,\n    \"imageUrl\": \"Hyundai_Tucson_2023.jpg\",\n    \"details\": \"Hybrid SUV with a spacious interior, advanced safety features, and great efficiency.\"\n  }\n\n",
+							"raw": "{\n    \"make\": \"Porsche\",\n    \"model\": \"912\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Gasoline\",\n    \"price\": 1051.0,\n    \"mileage\": 20,\n    \"imageUrl\": \"Porsche_911_2023.jpg\",\n    \"details\": \"Iconic sports car with an advanced turbocharged engine and outstanding performance.\",\n    \"status\": \"Available\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,12 +232,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles",
+							"raw": "http://localhost:8082/ezcars/vehicles",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles"
@@ -225,7 +254,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTIwMTIxMywiZXhwIjoxNzMxMjM3MjEzfQ.gwX40CAC5oG2ShUwXMAr_QWuTj0r6FMkYqb7cfDghCk",
 									"type": "string"
 								}
 							]
@@ -233,16 +262,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles/2",
+							"raw": "http://localhost:8082/ezcars/vehicles/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles",
-								"2"
+								"18"
 							]
 						}
 					},
@@ -251,23 +280,48 @@
 				{
 					"name": "get All Vehicles",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/vehicles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"vehicles"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "get makes-and-models",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTUxNzkyMiwiZXhwIjoxNzMxNTUzOTIyfQ.78NgsrncserSylzYB4j3xoexPbO0bUygaaMRohAZIHQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles/makes-and-models",
+							"raw": "http://localhost:8082/ezcars/vehicles/makes-and-models",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles",
@@ -293,12 +347,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles/search",
+							"raw": "http://localhost:8082/ezcars/vehicles/search?minPrice=1000&maxPrice=3000",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles",
@@ -312,13 +366,11 @@
 								},
 								{
 									"key": "minPrice",
-									"value": "1000",
-									"disabled": true
+									"value": "1000"
 								},
 								{
 									"key": "maxPrice",
-									"value": "20000",
-									"disabled": true
+									"value": "3000"
 								},
 								{
 									"key": "status",
@@ -331,8 +383,23 @@
 									"disabled": true
 								},
 								{
-									"key": "maxPrice",
-									"value": "50000",
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "model",
+									"value": "F-150",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "2022",
 									"disabled": true
 								}
 							]
@@ -343,19 +410,29 @@
 				{
 					"name": "delete Vehicle",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYSIsImlhdCI6MTcyOTkwMDMzNiwiZXhwIjoxNzI5OTM2MzM2fQ.uG6KNm5D9Qo4FiJLR8ZsD2yO6yvkKoztMOd62AEbqhU",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles/1",
+							"raw": "http://localhost:8082/ezcars/vehicles/7",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles",
-								"1"
+								"7"
 							]
 						}
 					},
@@ -364,11 +441,21 @@
 				{
 					"name": "Update Vehicle",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDQwMjc5MiwiZXhwIjoxNzMwNDM4NzkyfQ.50Bslz269NGwF-kBuMHiNTreXt13hmcAsKZiRiK0AFg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"make\": \"Ford\",\n    \"model\": \"F-160\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Electric\",\n    \"price\": 4999,\n    \"mileage\": 50,\n    \"imageUrl\": \"car4.webp\",\n    \"details\": \"Includes premium sound system and all-glass roof.\"\n  }",
+							"raw": "{\n    \"make\": \"Porsche\",\n    \"model\": \"911\",\n    \"year\": 2023,\n    \"transmission\": \"Automatic\",\n    \"fuelType\": \"Gasoline\",\n    \"price\": 1061.0,\n    \"mileage\": 20,\n    \"imageUrl\": \"Porsche_911_2023.jpg\",\n    \"details\": \"Iconic sports car with an advanced turbocharged engine and outstanding performance.\",\n    \"status\": \"Available\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,16 +463,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/vehicles/1",
+							"raw": "http://localhost:8082/ezcars/vehicles/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"vehicles",
-								"1"
+								"18"
 							]
 						}
 					},
@@ -399,18 +486,29 @@
 				{
 					"name": "get Ticket",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support",
+							"raw": "http://localhost:8082/ezcars/customer-support/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
-								"customer-support"
+								"customer-support",
+								"2"
 							]
 						}
 					},
@@ -419,15 +517,25 @@
 				{
 					"name": "get all tickets",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTcyOTk1NTM2MiwiZXhwIjoxNzI5OTkxMzYyfQ.ChhzotiWmmZpJWnrqxQiipJhOsvt1AaJs04J-63rpms",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support",
+							"raw": "http://localhost:8082/ezcars/customer-support",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"customer-support"
@@ -452,12 +560,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support/customer/1",
+							"raw": "http://localhost:8082/ezcars/customer-support/customer/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"customer-support",
@@ -485,7 +593,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customerId\": 1,\n  \"description\": \"I'm having trouble booking a vehicle. The system keeps showing an error message.\",\n  \"customerName\": \"Jitendra Rawat\",\n  \"customerEmail\": \"jitendra@example.com\",\n  \"priority\": \"MEDIUM\"\n}",
+							"raw": "{\n  \"customerId\": 2,\n  \"description\": \"I'm having trouble booking a vehicle. The system keeps showing an error message.\",\n  \"customerName\": \"Harsh\",\n  \"customerEmail\": \"harsh@example.com\",\n  \"priority\": \"LOW\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,12 +601,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support",
+							"raw": "http://localhost:8082/ezcars/customer-support",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"customer-support"
@@ -510,19 +618,38 @@
 				{
 					"name": "update Ticket",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYSIsImlhdCI6MTcyOTc5MDkzNCwiZXhwIjoxNzI5ODI2OTM0fQ.sZXGr4HXQTDDJ1xo93CgolvwRbaKBsRaIsygHoQsPBU",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"CLOSED\",\n    \"description\": \"I'm having trouble booking a vehicle. The system keeps showing an error message.\",\n    \"customerName\": \"Jitendra Rawat\",\n    \"customerEmail\": \"jitendra@example.com\",\n    \"priority\": \"MEDIUM\",\n    \"resolution\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support/1",
+							"raw": "http://localhost:8082/ezcars/customer-support/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"customer-support",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -531,19 +658,29 @@
 				{
 					"name": "delete Ticket",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTcyOTk1NTM2MiwiZXhwIjoxNzI5OTkxMzYyfQ.ChhzotiWmmZpJWnrqxQiipJhOsvt1AaJs04J-63rpms",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/customer-support/1",
+							"raw": "http://localhost:8082/ezcars/customer-support/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"customer-support",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -562,7 +699,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTI3NjgyMywiZXhwIjoxNzMxMzEyODIzfQ.vfbzgbLBTFTPoffBpPn54uSAkDCgsWpLBdbDGgv2pKo",
 									"type": "string"
 								}
 							]
@@ -571,7 +708,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": 1,\n  \"vehicleId\": 6,\n  \"pickUpDate\": \"2024-11-16\",\n  \"duration\": 36,\n  \"pickupLocation\": \"Airport Terminal 3\",\n  \"dropoffLocation\": \"Downtown Car Rental Office\"\n  \"status\": \"\"\n}",
+							"raw": "{\n  \"userId\": 1,\n  \"vehicleId\": 19,\n  \"pickUpDate\": \"2024-11-16\",\n  \"duration\": 18,\n  \"pickupLocation\": \"Airport Terminal 3\",\n  \"dropoffLocation\": \"Downtown Car Rental Office\",\n  \"status\": \"PENDING\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -579,12 +716,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings",
+							"raw": "http://localhost:8082/ezcars/bookings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"bookings"
@@ -601,7 +738,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDQwNjc4MSwiZXhwIjoxNzMwNDQyNzgxfQ.vGCHzgtoEKjwbUznBW7qugVKS21Bg7f49QlEvoX-Jf4",
 									"type": "string"
 								}
 							]
@@ -609,16 +746,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/2",
+							"raw": "http://localhost:8082/ezcars/bookings/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"bookings",
-								"2"
+								"3"
 							]
 						}
 					},
@@ -632,7 +769,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTExNjMxMSwiZXhwIjoxNzMxMTUyMzExfQ.QKRlRL7ZdhdSxxFYupRunIrnloten6P5Mpvkn8nFWb8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTUxOTUyNywiZXhwIjoxNzMxNTU1NTI3fQ.O8O2VqkI7zyi0xa_1wTdsCHlBUljT9vhT-eEpZD2jBc",
 									"type": "string"
 								}
 							]
@@ -641,7 +778,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": 3,\n    \"vehicleId\": 9,\n    \"pickUpDate\": \"2024-11-08\",\n    \"duration\": 12,\n    \"pickupLocation\": \"New York\",\n    \"dropoffLocation\": \"New York\",\n    \"status\": \"CONFIRMED\"\n\n}",
+							"raw": " {\n        \"userId\": 1,\n        \"vehicleId\": 6,\n        \"pickUpDate\": \"2023-10-16\",\n        \"duration\": 5,\n        \"pickupLocation\": \"New York, NY, USA\",\n        \"dropoffLocation\": \"Newport, Jersey City, NJ, USA\",\n        \"status\": \"CANCELLED\"\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -649,16 +786,56 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/1",
+							"raw": "http://localhost:8082/ezcars/bookings/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"bookings",
-								"1"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update booking Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTUxOTUyNywiZXhwIjoxNzMxNTU1NTI3fQ.O8O2VqkI7zyi0xa_1wTdsCHlBUljT9vhT-eEpZD2jBc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"userId\": 1,\n        \"vehicleId\": 6,\n        \"pickUpDate\": \"2023-10-16\",\n        \"duration\": 5,\n        \"pickupLocation\": \"New York, NY, USA\",\n        \"dropoffLocation\": \"Newport, Jersey City, NJ, USA\",\n        \"status\": \"CANCELLED\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/ezcars/bookings/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"bookings",
+								"2"
 							]
 						}
 					},
@@ -672,7 +849,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTUxOTUyNywiZXhwIjoxNzMxNTU1NTI3fQ.O8O2VqkI7zyi0xa_1wTdsCHlBUljT9vhT-eEpZD2jBc",
 									"type": "string"
 								}
 							]
@@ -680,16 +857,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/2",
+							"raw": "http://localhost:8082/ezcars/bookings/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"bookings",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -711,12 +888,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "GET http://localhost:8080/ezcars/bookings/user/1?sortDirection=desc",
-							"protocol": "GET http",
+							"raw": "http://localhost:8082/ezcars/bookings/user/1",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
 								"bookings",
@@ -726,7 +903,7 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "CONFIRMED",
+									"value": "PENDING",
 									"disabled": true
 								},
 								{
@@ -741,7 +918,8 @@
 								},
 								{
 									"key": "sortDirection",
-									"value": "desc"
+									"value": "desc",
+									"disabled": true
 								},
 								{
 									"key": "",
@@ -761,7 +939,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMDMwMTk3MiwiZXhwIjoxNzMwMzM3OTcyfQ.bh7LcarOMv92HRViHMALRZG2i3ylW-C5mJg0oxIroPM",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTExNjMxMSwiZXhwIjoxNzMxMTUyMzExfQ.QKRlRL7ZdhdSxxFYupRunIrnloten6P5Mpvkn8nFWb8",
 									"type": "string"
 								}
 							]
@@ -769,17 +947,319 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/ezcars/bookings/user/",
+							"raw": "http://localhost:8082/ezcars/bookings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"ezcars",
-								"bookings",
-								"user",
-								""
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTc5MDU0MywiZXhwIjoxNzMxODI2NTQzfQ.J15n7vZ6ael95RZDFdF2-quIltxqviikgXAVjcORXVg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Key",
+								"value": "Content-Type",
+								"type": "text"
+							},
+							{
+								"key": "Value",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment/create-payment-intent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment",
+								"create-payment-intent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTc5NDUxMiwiZXhwIjoxNzMxODMwNTEyfQ.CCj4S0XgXDntwu1ML79Wj7wlwidy2LZB7b3QepaCmRU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookingId\": 1234,\n  \"timeStamp\": \"2024-11-18T11:30:00\",\n  \"status\": \"PENDING\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all payments",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get payment by Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get all payments by Booking Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment/booking/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment",
+								"booking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Payment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "get rating by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"rating",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all ratings by vehicle id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/rating/vehicle/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"rating",
+								"vehicle",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMjExNzkwNywiZXhwIjoxNzMyMTUzOTA3fQ.yydmUelg2AtisMa0D8Nf0UUV09ZOClrnH-j9x4w2XqI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleId\": 2,\n    \"userId\": 1,\n    \"rating\": 4,\n    \"review\": \"Great car, smooth ride and excellent fuel efficiency. The pickup was hassle-free and the drop-off process was equally smooth. Would definitely rent again!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/ezcars/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete rating",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"rating",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update rating",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"rating",
+								"1"
 							]
 						}
 					},

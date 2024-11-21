@@ -1,8 +1,7 @@
 package com.rental.ezcars.impl;
 
 import com.rental.ezcars.entity.Booking;
-import com.rental.ezcars.entity.Vehicle;
-import com.rental.ezcars.entity.Booking.BookingStatus;
+
 import com.rental.ezcars.exception.EmailSendException;
 import com.rental.ezcars.exception.ResourceNotFoundException;
 import com.rental.ezcars.repository.BookingRepository;
@@ -17,8 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -101,23 +99,39 @@ public class BookingServiceImpl implements BookingService {
     public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
         Booking booking = getBookingById(bookingId);
         booking.setStatus(status);
-        bookingRepository.save(booking);
+        
+        LocalDate today = LocalDate.now(); 
+
+        if (status.equals(Booking.BookingStatus.CANCELLED)) {
+            // Check if the pickup date is more than one day away
+            if (booking.getPickUpDate().isAfter(today.plusDays(1))) {
+                bookingRepository.save(booking);
+            } else {
+                // Throw an IllegalStateException if cancellation is not allowed
+                throw new IllegalStateException("You cannot cancel this booking at this moment. Cancellations are only allowed one day prior to the pickup date.");
+            }
+        } else if (status.equals(Booking.BookingStatus.CONFIRMED)) {
+            bookingRepository.save(booking);
+        } else {
+            throw new IllegalArgumentException("Invalid booking status.");
+        }
+
+        // Execute email sending in a separate thread
         taskExecutor.execute(() -> {
             try {
-            	if(status.equals(Booking.BookingStatus.CONFIRMED)) {
-            	emailService.sendConfirmationEmail(booking);
-            	}
-            	else if(status.equals(Booking.BookingStatus.CANCELLED)) {
-            		emailService.sendCancellationEmail(booking)	;
-            	}
-               
+                if (status.equals(Booking.BookingStatus.CONFIRMED)) {
+                    emailService.sendConfirmationEmail(booking);
+                } else if (status.equals(Booking.BookingStatus.CANCELLED)) {
+                    emailService.sendCancellationEmail(booking);
+                }
             } catch (EmailSendException e) {
                 e.printStackTrace();
             }
         });
-        
+
         return booking;
     }
+    
     
    @Scheduled(cron = "0 0 10 * * ?") // Runs every day at 10:00 AM
     public void sendReminderEmailsForUpcomingBookings() {

@@ -27,13 +27,7 @@ public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
     
     @Autowired
-    private VehicleServiceImpl vehicleService;
-    
-    @Autowired
     private EmailServiceImpl emailService;
-    
-    @Autowired
-    private UserServiceImpl userService;
     
     @Autowired
     private AsyncTaskExecutor taskExecutor;
@@ -102,73 +96,7 @@ public class BookingServiceImpl implements BookingService {
         
         return bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, pageable);
     }
-    
-    @Override
-    public void sendConfirmationEmail(Booking booking) throws EmailSendException {
-        Optional<Vehicle> bookedVehicle = vehicleService.getVehicleById(booking.getVehicleId());
-        String subject = "Booking Confirmation - EZCars #" + booking.getId();
-        
-        StringBuilder body = new StringBuilder();
-        body.append("Thank you for your booking with EZCars. Your booking details:\n")
-            .append("Booking ID: ").append(booking.getId()).append("\n")
-            .append("Start Date: ").append(booking.getPickUpDate()).append("\n")
-            .append("Pick Up Location: ").append(booking.getPickupLocation()).append("\n");
-
-        double totalPrice = 0.0;
-        if (bookedVehicle.isPresent()) {
-            Vehicle vehicle = bookedVehicle.get();
-            body.append("Vehicle Details:\n")
-                .append("  Make: ").append(vehicle.getMake()).append("\n")
-                .append("  Model: ").append(vehicle.getModel()).append("\n")
-                .append("  Year: ").append(vehicle.getYear()).append("\n\n");
-            
-            // Calculate total price
-            totalPrice = vehicle.getPrice() * booking.getDuration();
-            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
-                .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
-        } 
-
-        body.append("\nThank you for choosing EZCars! We appreciate your business and look forward to serving you again.");
-
-        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
-        
-        emailService.sendEmail(userMailId, subject, body.toString());
-    }
-    
-    @Override
-    public void sendReminderEmail(Booking booking) throws EmailSendException {
-        Optional<Vehicle> bookedVehicle = vehicleService.getVehicleById(booking.getVehicleId());
-        String subject = "Reminder: Your EZCars Booking #" + booking.getId();
-        
-        StringBuilder body = new StringBuilder();
-        body.append("This is a reminder for your upcoming booking with EZCars. Your booking details:\n")
-            .append("Booking ID: ").append(booking.getId()).append("\n")
-            .append("Start Date: ").append(booking.getPickUpDate()).append("\n")
-            .append("Pick Up Location: ").append(booking.getPickupLocation()).append("\n");
-
-        double totalPrice = 0.0;
-        if (bookedVehicle.isPresent()) {
-            Vehicle vehicle = bookedVehicle.get();
-            body.append("Vehicle Details:\n")
-                .append("  Make: ").append(vehicle.getMake()).append("\n")
-                .append("  Model: ").append(vehicle.getModel()).append("\n")
-                .append("  Year: ").append(vehicle.getYear()).append("\n\n");
-            
-            // Calculate total price
-            totalPrice = vehicle.getPrice() * booking.getDuration();
-            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
-                .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
-        } 
-
-        body.append("If you need to make any changes to your booking, please contact our customer service.\n\n")
-            .append("We look forward to serving you soon. Thank you for choosing EZCars!");
-
-        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
-        
-        emailService.sendEmail(userMailId, subject, body.toString());
-    }
- 
-    
+     
     @Override
     public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
         Booking booking = getBookingById(bookingId);
@@ -176,7 +104,12 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
         taskExecutor.execute(() -> {
             try {
-                sendConfirmationEmail(booking);
+            	if(status.equals(Booking.BookingStatus.CONFIRMED)) {
+            	emailService.sendConfirmationEmail(booking);
+            	}
+            	else if(status.equals(Booking.BookingStatus.CANCELLED)) {
+            		emailService.sendCancellationEmail(booking)	;
+            	}
                
             } catch (EmailSendException e) {
                 e.printStackTrace();
@@ -206,7 +139,7 @@ public class BookingServiceImpl implements BookingService {
             for (Booking booking : bookingPage.getContent()) {
                 if (booking.getPickUpDate().isEqual(tomorrow)) {
                     try {
-                        sendReminderEmail(booking);
+                    	emailService.sendReminderEmail(booking);
           
                     } catch (EmailSendException e) {
                     }

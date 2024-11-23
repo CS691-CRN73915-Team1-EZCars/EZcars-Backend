@@ -16,10 +16,6 @@ public interface BookingService {
     void deleteBooking(Long bookingId);
   
     Page<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection,int page, int size);
-    
-    void sendConfirmationEmail(Booking booking) throws EmailSendException, UserException;
-    
-    void sendReminderEmail(Booking booking) throws EmailSendException, UserException;
-    
+        
     Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status);
 }

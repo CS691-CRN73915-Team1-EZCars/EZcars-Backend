@@ -1,8 +1,7 @@
 package com.rental.ezcars.impl;
 
 import com.rental.ezcars.entity.Booking;
-import com.rental.ezcars.entity.Vehicle;
-import com.rental.ezcars.entity.Booking.BookingStatus;
+
 import com.rental.ezcars.exception.EmailSendException;
 import com.rental.ezcars.exception.ResourceNotFoundException;
 import com.rental.ezcars.repository.BookingRepository;
@@ -17,8 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -27,13 +25,7 @@ public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
     
     @Autowired
-    private VehicleServiceImpl vehicleService;
-    
-    @Autowired
     private EmailServiceImpl emailService;
-    
-    @Autowired
-    private UserServiceImpl userService;
     
     @Autowired
     private AsyncTaskExecutor taskExecutor;
@@ -102,89 +94,44 @@ public class BookingServiceImpl implements BookingService {
         
         return bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, pageable);
     }
-    
-    @Override
-    public void sendConfirmationEmail(Booking booking) throws EmailSendException {
-        Optional<Vehicle> bookedVehicle = vehicleService.getVehicleById(booking.getVehicleId());
-        String subject = "Booking Confirmation - EZCars #" + booking.getId();
-        
-        StringBuilder body = new StringBuilder();
-        body.append("Thank you for your booking with EZCars. Your booking details:\n")
-            .append("Booking ID: ").append(booking.getId()).append("\n")
-            .append("Start Date: ").append(booking.getPickUpDate()).append("\n")
-            .append("Pick Up Location: ").append(booking.getPickupLocation()).append("\n");
-
-        double totalPrice = 0.0;
-        if (bookedVehicle.isPresent()) {
-            Vehicle vehicle = bookedVehicle.get();
-            body.append("Vehicle Details:\n")
-                .append("  Make: ").append(vehicle.getMake()).append("\n")
-                .append("  Model: ").append(vehicle.getModel()).append("\n")
-                .append("  Year: ").append(vehicle.getYear()).append("\n\n");
-            
-            // Calculate total price
-            totalPrice = vehicle.getPrice() * booking.getDuration();
-            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
-                .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
-        } 
-
-        body.append("\nThank you for choosing EZCars! We appreciate your business and look forward to serving you again.");
-
-        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
-        
-        emailService.sendEmail(userMailId, subject, body.toString());
-    }
-    
-    @Override
-    public void sendReminderEmail(Booking booking) throws EmailSendException {
-        Optional<Vehicle> bookedVehicle = vehicleService.getVehicleById(booking.getVehicleId());
-        String subject = "Reminder: Your EZCars Booking #" + booking.getId();
-        
-        StringBuilder body = new StringBuilder();
-        body.append("This is a reminder for your upcoming booking with EZCars. Your booking details:\n")
-            .append("Booking ID: ").append(booking.getId()).append("\n")
-            .append("Start Date: ").append(booking.getPickUpDate()).append("\n")
-            .append("Pick Up Location: ").append(booking.getPickupLocation()).append("\n");
-
-        double totalPrice = 0.0;
-        if (bookedVehicle.isPresent()) {
-            Vehicle vehicle = bookedVehicle.get();
-            body.append("Vehicle Details:\n")
-                .append("  Make: ").append(vehicle.getMake()).append("\n")
-                .append("  Model: ").append(vehicle.getModel()).append("\n")
-                .append("  Year: ").append(vehicle.getYear()).append("\n\n");
-            
-            // Calculate total price
-            totalPrice = vehicle.getPrice() * booking.getDuration();
-            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
-                .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
-        } 
-
-        body.append("If you need to make any changes to your booking, please contact our customer service.\n\n")
-            .append("We look forward to serving you soon. Thank you for choosing EZCars!");
-
-        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
-        
-        emailService.sendEmail(userMailId, subject, body.toString());
-    }
- 
-    
+     
     @Override
     public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
         Booking booking = getBookingById(bookingId);
         booking.setStatus(status);
-        bookingRepository.save(booking);
+        
+        LocalDate today = LocalDate.now(); 
+
+        if (status.equals(Booking.BookingStatus.CANCELLED)) {
+            // Check if the pickup date is more than one day away
+            if (booking.getPickUpDate().isAfter(today.plusDays(1))) {
+                bookingRepository.save(booking);
+            } else {
+                // Throw an IllegalStateException if cancellation is not allowed
+                throw new IllegalStateException("You cannot cancel this booking at this moment. Cancellations are only allowed one day prior to the pickup date.");
+            }
+        } else if (status.equals(Booking.BookingStatus.CONFIRMED)) {
+            bookingRepository.save(booking);
+        } else {
+            throw new IllegalArgumentException("Invalid booking status.");
+        }
+
+        // Execute email sending in a separate thread
         taskExecutor.execute(() -> {
             try {
-                sendConfirmationEmail(booking);
-               
+                if (status.equals(Booking.BookingStatus.CONFIRMED)) {
+                    emailService.sendConfirmationEmail(booking);
+                } else if (status.equals(Booking.BookingStatus.CANCELLED)) {
+                    emailService.sendCancellationEmail(booking);
+                }
             } catch (EmailSendException e) {
                 e.printStackTrace();
             }
         });
-        
+
         return booking;
     }
+    
     
    @Scheduled(cron = "0 0 10 * * ?") // Runs every day at 10:00 AM
     public void sendReminderEmailsForUpcomingBookings() {
@@ -206,7 +153,7 @@ public class BookingServiceImpl implements BookingService {
             for (Booking booking : bookingPage.getContent()) {
                 if (booking.getPickUpDate().isEqual(tomorrow)) {
                     try {
-                        sendReminderEmail(booking);
+                    	emailService.sendReminderEmail(booking);
           
                     } catch (EmailSendException e) {
                     }

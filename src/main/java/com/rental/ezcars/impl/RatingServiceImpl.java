@@ -9,6 +9,8 @@ import com.rental.ezcars.service.RatingService;
 import com.rental.ezcars.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,24 +46,30 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<RatingDTO> getAllRatingsByVehicleId(Long vehicleId) {
-        List<Rating> ratings = ratingRepository.findByVehicleId(vehicleId);
-        List<RatingDTO> ratingDTOs = new ArrayList<>();
-
-        for (Rating rating : ratings) {
+    public Page<RatingDTO> getAllRatingsByVehicleId(Long vehicleId, Pageable pageable) {
+        Page<Rating> ratingsPage = ratingRepository.findByVehicleId(vehicleId, pageable);
+        
+        return ratingsPage.map(rating -> {
             RatingDTO dto = convertToDTO(rating);
-           
+            
             if (rating.getUserId() != null) {
-                User user = userService.getUserById(rating.getUserId()); 
-                if (user != null) {
-                    dto.setUserName(user.getUsername());
+                try {
+                    User user = userService.getUserById(rating.getUserId());
+                    if (user != null) {
+                        dto.setUserName(user.getUsername());
+                    } else {
+                        dto.setUserName("Unknown User"); 
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error fetching user for rating ID " + rating.getRatingId() + ": " + e.getMessage());
+                    dto.setUserName("Error fetching username"); 
                 }
+            } else {
+                dto.setUserName("Anonymous"); 
             }
             
-            ratingDTOs.add(dto);
-        }
-
-        return ratingDTOs;
+            return dto;
+        });
     }
     
 

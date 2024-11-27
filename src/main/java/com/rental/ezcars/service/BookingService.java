@@ -5,6 +5,8 @@ import com.rental.ezcars.entity.Booking.BookingStatus;
 import com.rental.ezcars.exception.EmailSendException;
 import com.rental.ezcars.exception.UserException;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,6 +18,7 @@ public interface BookingService {
     void deleteBooking(Long bookingId);
   
     Page<Booking> getAllBookingsByUserId(Long userId, Booking.BookingStatus status, Integer year, Integer month, String sortDirection,int page, int size);
-        
+    
+    List<Long> getBookingIdsByUserId(Long userId);
     Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status);
 }

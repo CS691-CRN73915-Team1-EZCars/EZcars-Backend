@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal; 
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,52 +23,58 @@ public class Payment {
     @Column(nullable = false)
     private Long bookingId;
 
+    @Column(nullable = false)
+    private BigDecimal amount;
+
     private LocalDateTime timeStamp;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatus status;
 
+    // Getters and Setters
+
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) { 
+        this.amount = amount;
+    }
 
     public LocalDateTime getTimeStamp() {
-		return timeStamp;
-	}
+        return timeStamp;
+    }
 
-	public void setTimeStamp(LocalDateTime timeStamp) {
-		this.timeStamp = timeStamp;
-	}
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
-	public Long getPaymentId() {
-		return paymentId;
-	}
+    public PaymentStatus getStatus() {
+        return status;
+    }
 
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
+    }
 
-	public void setPaymentId(Long paymentId) {
-		this.paymentId = paymentId;
-	}
-
-
-	public Long getBookingId() {
-		return bookingId;
-	}
-
-
-	public void setBookingId(Long bookingId) {
-		this.bookingId = bookingId;
-	}
-
-
-	public PaymentStatus getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(PaymentStatus status) {
-		this.status = status;
-	}
-
-
-	public enum PaymentStatus {
-        COMPLETED, PENDING
+    public enum PaymentStatus {
+        COMPLETED, PENDING, REFUNDED
     }
 }

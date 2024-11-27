@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rental.ezcars.dto.BookingStatusRequest;
 import com.rental.ezcars.entity.Booking;
-import com.rental.ezcars.entity.Booking.BookingStatus;
 import com.rental.ezcars.service.BookingService;
 
 @RestController

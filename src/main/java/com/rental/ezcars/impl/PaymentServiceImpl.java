@@ -1,9 +1,10 @@
 package com.rental.ezcars.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.rental.ezcars.entity.Booking;
 import com.rental.ezcars.entity.Payment;
 import com.rental.ezcars.repository.PaymentRepository;
 import com.rental.ezcars.service.PaymentService;
@@ -15,6 +16,10 @@ import java.util.Optional;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
+    
+    @Autowired
+    private BookingServiceImpl bookingService;
+    
 
     @Autowired
     public PaymentServiceImpl(PaymentRepository paymentRepository) {
@@ -37,8 +42,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getAllPayments() {
-        return paymentRepository.findAll();
+    public Page<Payment> getPaymentsByUserId(Long userId, Pageable pageable) {
+        List<Long> userBookingIds = bookingService.getBookingIdsByUserId(userId);
+        
+        if (!userBookingIds.isEmpty()) {
+            return paymentRepository.findByBookingIdIn(userBookingIds, pageable);
+        }
+        
+        return Page.empty(pageable);
     }
 
     @Override

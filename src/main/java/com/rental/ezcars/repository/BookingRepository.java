@@ -1,5 +1,7 @@
 package com.rental.ezcars.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +23,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
         @Param("month") Integer month,
         Pageable pageable
     );
+    
+    @Query("SELECT b.id FROM Booking b WHERE b.userId = :userId")
+    List<Long> findIdsByUserId(@Param("userId") Long userId);
 }

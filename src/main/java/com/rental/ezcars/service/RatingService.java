@@ -3,8 +3,10 @@ package com.rental.ezcars.service;
 import com.rental.ezcars.dto.RatingDTO;
 import com.rental.ezcars.entity.Rating;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RatingService {
 
@@ -12,7 +14,7 @@ public interface RatingService {
 
     Optional<Rating> getRatingById(Long id);
 
-    List<RatingDTO> getAllRatingsByVehicleId(Long vehicleId);
+    Page<RatingDTO> getAllRatingsByVehicleId(Long vehicleId, Pageable pageable);
 
     Rating updateRating(Long id, Rating ratingDetails);
 

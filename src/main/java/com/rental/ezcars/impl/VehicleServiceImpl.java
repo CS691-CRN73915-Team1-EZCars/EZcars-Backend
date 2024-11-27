@@ -56,12 +56,16 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Page<VehicleDTO> getAllVehicles(Pageable pageable) {
         Page<Vehicle> vehiclesPage = vehicleRepository.findAll(pageable);
-        
+
         return vehiclesPage.map(vehicle -> {
             VehicleDTO dto = convertToDTO(vehicle);
-            List<RatingDTO> ratings = ratingService.getAllRatingsByVehicleId(vehicle.getVehicleId());
-            List<Double> ratingValues = extractRatingValues(ratings);
+            
+            Page<RatingDTO> ratingsPage = ratingService.getAllRatingsByVehicleId(vehicle.getVehicleId(), Pageable.unpaged());
+            
+            List<Double> ratingValues = extractRatingValues(ratingsPage.getContent());
+            
             dto.setRating(calculateAverageRating(ratingValues));
+            
             return dto;
         });
     }
@@ -78,9 +82,13 @@ public class VehicleServiceImpl implements VehicleService {
         
         return vehiclesPage.map(vehicle -> {
             VehicleDTO dto = convertToDTO(vehicle);
-            List<RatingDTO> ratings = ratingService.getAllRatingsByVehicleId(vehicle.getVehicleId());
-            List<Double> ratingValues = extractRatingValues(ratings);
+            
+            Page<RatingDTO> ratingsPage = ratingService.getAllRatingsByVehicleId(vehicle.getVehicleId(), Pageable.unpaged());
+            
+            List<Double> ratingValues = extractRatingValues(ratingsPage.getContent());
+            
             dto.setRating(calculateAverageRating(ratingValues));
+            
             return dto;
         });
     }

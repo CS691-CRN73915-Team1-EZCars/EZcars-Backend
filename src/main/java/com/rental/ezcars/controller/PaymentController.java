@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/payment")
@@ -66,9 +68,15 @@ public class PaymentController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Payment>> getAllPayments() {
-        List<Payment> payments = paymentService.getAllPayments();
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<Payment>> getPaymentsByUserId(
+        @PathVariable Long userId,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+    ) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "timeStamp");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Payment> payments = paymentService.getPaymentsByUserId(userId, pageable);
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 

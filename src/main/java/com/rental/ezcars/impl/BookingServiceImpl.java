@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
@@ -94,6 +95,11 @@ public class BookingServiceImpl implements BookingService {
         
         return bookingRepository.findAllByUserIdWithFilters(userId, status, year, month, pageable);
     }
+    
+    @Override
+    public List<Long> getBookingIdsByUserId(Long userId) {
+        return bookingRepository.findIdsByUserId(userId);
+    }
      
     @Override
     public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
@@ -151,7 +157,7 @@ public class BookingServiceImpl implements BookingService {
             }
 
             for (Booking booking : bookingPage.getContent()) {
-                if (booking.getPickUpDate().isEqual(tomorrow)) {
+            	if (booking.getPickUpDate().isEqual(tomorrow) && booking.getStatus() == Booking.BookingStatus.CONFIRMED) {
                     try {
                     	emailService.sendReminderEmail(booking);
           

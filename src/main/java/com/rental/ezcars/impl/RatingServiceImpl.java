@@ -1,40 +1,58 @@
 package com.rental.ezcars.impl;
 
 import com.rental.ezcars.dto.RatingDTO;
+import com.rental.ezcars.entity.Booking;
 import com.rental.ezcars.entity.Rating;
 import com.rental.ezcars.entity.User;
 import com.rental.ezcars.exception.UserException;
 import com.rental.ezcars.repository.RatingRepository;
+import com.rental.ezcars.service.BookingService;
 import com.rental.ezcars.service.RatingService;
 import com.rental.ezcars.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RatingServiceImpl implements RatingService {
+	
+    @Autowired
+    @Lazy
+    private BookingService bookingService;
 
     @Autowired
     private RatingRepository ratingRepository;
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private RatingLinkService ratingLinkService;
+    
 
-    public Rating createRating(Rating rating) {
-        if (rating == null) {
+
+    public Rating createRating(Rating rating, String token) {
+        if (rating.getRating() == null) {
             throw new IllegalArgumentException("Rating cannot be null");
+        }
+
+        if (!ratingLinkService.validateAndInvalidateToken(token)) {
+            throw new IllegalArgumentException("Invalid or expired token");
         }
 
         User user = userService.getUserById(rating.getUserId());
         if (user == null) {
             throw new UserException("User not found with id: " + rating.getUserId(), UserException.UserExceptionType.USER_NOT_FOUND);
         }
+        
+       Booking booking = bookingService.getBookingById(ratingLinkService.getBookingIdFromToken(token));
+        
+       rating.setVehicleId(booking.getVehicleId());
         return ratingRepository.save(rating);
     }
 

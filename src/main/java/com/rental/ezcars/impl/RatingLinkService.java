@@ -16,7 +16,7 @@ public class RatingLinkService {
     @Autowired
     private FeedbackTokens tokenRepository;
     
-    @Value("${feedback.url}")
+    @Value("${cors.allowed-origins}")
     private String feedbackBaseUrl;
 
     public String generateFeedbackLink(Long bookingId) {
@@ -26,7 +26,7 @@ public class RatingLinkService {
         tokenEntity.setBookingId(bookingId);
         tokenEntity.setUsed(false);
         tokenRepository.save(tokenEntity);
-        return feedbackBaseUrl + token;
+        return feedbackBaseUrl + "/feedback?token=" + token;
     }
 
         public boolean validateAndInvalidateToken(String token) {

@@ -26,7 +26,7 @@ public class RatingLinkService {
         tokenEntity.setBookingId(bookingId);
         tokenEntity.setUsed(false);
         tokenRepository.save(tokenEntity);
-        return feedbackBaseUrl + "/feedback?token=" + token;
+        return feedbackBaseUrl + "/AddRating?token=" + token;
     }
 
         public boolean validateAndInvalidateToken(String token) {

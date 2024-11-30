@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rental.ezcars.entity.TokenEntity;
 import com.rental.ezcars.repository.FeedbackTokens;
+import com.rental.ezcars.service.BookingService;
 
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class RatingLinkService {
         tokenEntity.setBookingId(bookingId);
         tokenEntity.setUsed(false);
         tokenRepository.save(tokenEntity);
-        return feedbackBaseUrl + "/AddRating?token=" + token;
+        return feedbackBaseUrl + "/AddRating/?token=" + token + "&BookingId=" + bookingId;
     }
 
         public boolean validateAndInvalidateToken(String token) {

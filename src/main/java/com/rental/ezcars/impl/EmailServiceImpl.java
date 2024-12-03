@@ -25,6 +25,9 @@ public class EmailServiceImpl implements EmailService {
     
     @Autowired
     private UserServiceImpl userService;
+    
+    @Autowired
+    private RatingLinkService ratingLinkService;
 
     @Value("$(EzCars)") 
     private String fromEmail;
@@ -138,4 +141,24 @@ public class EmailServiceImpl implements EmailService {
         
         this.sendEmail(userMailId, subject, body.toString());
     }
-}
+    
+    @Override
+    public void sendRatingEmail(Booking booking) throws EmailSendException {
+        String subject = "How was your EZCars experience? - Booking #" + booking.getId();
+        
+        StringBuilder body = new StringBuilder();
+        body.append("Thank you for choosing EZCars for your recent rental. We hope you had a great experience!\n\n")
+            .append("We value your feedback and would appreciate if you could take a moment to rate your experience.\n\n")
+            .append("Please click on the link below to submit your review:\n")
+            .append(ratingLinkService.generateFeedbackLink(booking.getId())).append("\n\n")
+            .append("Your feedback helps us improve our services and provide better experiences for all our customers.\n\n")
+            .append("Thank you for your time and we look forward to serving you again soon!");
+
+        String userMailId = userService.getUserById(booking.getUserId()).getEmail();
+        
+        try {
+            this.sendEmail(userMailId, subject, body.toString());
+        } catch (Exception e) {
+            throw new EmailSendException("Failed to send rating email for booking " + booking.getId(), e);
+        }
+    }}

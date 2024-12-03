@@ -14,4 +14,5 @@ public interface EmailService {
     
     void sendReminderEmail(Booking booking) throws EmailSendException, UserException;
 
+    void sendRatingEmail(Booking booking) throws EmailSendException;
 }

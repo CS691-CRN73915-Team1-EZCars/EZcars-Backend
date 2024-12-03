@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface RatingService {
 
-    Rating createRating(Rating rating);
+    Rating createRating(Rating rating, String token);
 
     Optional<Rating> getRatingById(Long id);
 

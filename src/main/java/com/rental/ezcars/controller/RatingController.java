@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/rating")
 public class RatingController {
@@ -22,8 +20,8 @@ public class RatingController {
     private RatingService ratingService;
 
     @PostMapping
-    public ResponseEntity<Rating> createRating(@RequestBody Rating rating) {
-        Rating newRating = ratingService.createRating(rating);
+    public ResponseEntity<Rating> createRating(@RequestBody Rating rating, @RequestParam String token) {
+        Rating newRating = ratingService.createRating(rating, token);
         return new ResponseEntity<>(newRating, HttpStatus.CREATED);
     }
 

@@ -6,6 +6,8 @@ import com.rental.ezcars.exception.EmailSendException;
 import com.rental.ezcars.exception.ResourceNotFoundException;
 import com.rental.ezcars.repository.BookingRepository;
 import com.rental.ezcars.service.BookingService;
+import com.rental.ezcars.service.EmailService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.data.domain.Page;
@@ -26,10 +28,14 @@ public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
     
     @Autowired
-    private EmailServiceImpl emailService;
-    
-    @Autowired
     private AsyncTaskExecutor taskExecutor;
+    
+    private EmailService emailService;
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
     
     String userMailId;
 
@@ -113,14 +119,11 @@ public class BookingServiceImpl implements BookingService {
             if (booking.getPickUpDate().isAfter(today.plusDays(1))) {
                 bookingRepository.save(booking);
             } else {
-                // Throw an IllegalStateException if cancellation is not allowed
                 throw new IllegalStateException("You cannot cancel this booking at this moment. Cancellations are only allowed one day prior to the pickup date.");
             }
         } else if (status.equals(Booking.BookingStatus.CONFIRMED)) {
             bookingRepository.save(booking);
-        } else {
-            throw new IllegalArgumentException("Invalid booking status.");
-        }
+        } 
 
         // Execute email sending in a separate thread
         taskExecutor.execute(() -> {
@@ -129,6 +132,9 @@ public class BookingServiceImpl implements BookingService {
                     emailService.sendConfirmationEmail(booking);
                 } else if (status.equals(Booking.BookingStatus.CANCELLED)) {
                     emailService.sendCancellationEmail(booking);
+                }else if (status.equals(Booking.BookingStatus.COMPLETED)) {
+                    emailService.sendRatingEmail(booking);
+                    bookingRepository.save(booking);
                 }
             } catch (EmailSendException e) {
                 e.printStackTrace();

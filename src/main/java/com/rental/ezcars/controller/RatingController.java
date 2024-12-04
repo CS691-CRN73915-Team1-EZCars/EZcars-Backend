@@ -53,7 +53,7 @@ public class RatingController {
             return ResponseEntity.ok(ratings); 
         } catch (Exception e) {
             System.err.println("Error fetching ratings: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Return 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
         }
     }
 

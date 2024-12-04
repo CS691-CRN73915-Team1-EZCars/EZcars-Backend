@@ -42,6 +42,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/signup", "/login").permitAll() 
                 .requestMatchers(HttpMethod.GET, "/vehicles").permitAll()
+                .requestMatchers(HttpMethod.GET, "/admin/status/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

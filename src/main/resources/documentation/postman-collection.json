@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTIwMjAxNywiZXhwIjoxNzMxMjM4MDE3fQ.r9ZjUyRlmo0uyeRT5Ue_b9mwn0Roqpf_-VfsjYIZ7-Y",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMjU4ODE5MiwiZXhwIjoxNzMyNjI0MTkyfQ.meUsCTD-bY-nK-PwrLuBoeOAGEvp3np4mqRx3Le7hd8",
 									"type": "string"
 								}
 							]
@@ -65,6 +65,38 @@
 								"ezcars",
 								"users",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMTA4NDQ3MCwiZXhwIjoxNzMxMTIwNDcwfQ.vVPRZamzkkoI1Hwt8huLcWaIiXaRjFwbmnT2hnKUVAU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/users/1/stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"users",
+								"1",
+								"stats"
 							]
 						}
 					},
@@ -1057,10 +1089,44 @@
 					"response": []
 				},
 				{
-					"name": "get all payments",
+					"name": "get all payments by user Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXRlbmRyYS5yYXdhdCIsImlhdCI6MTczMjU2MTUxMiwiZXhwIjoxNzMyNTk3NTEyfQ.dTyrXC0g-SxBZH1YTil5blRwg2Hn5NYkRTa5OGmxG1o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/ezcars/payment/user/1?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"ezcars",
+								"payment",
+								"user",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
 					},
 					"response": []
 				},

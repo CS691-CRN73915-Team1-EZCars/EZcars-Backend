@@ -1,12 +1,19 @@
 package com.rental.ezcars.impl;
 
+import com.rental.ezcars.dto.UserStatsDTO;
 import com.rental.ezcars.entity.User;
 import com.rental.ezcars.exception.UserException;
 import com.rental.ezcars.repository.UserRepository;
 import com.rental.ezcars.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.rental.ezcars.entity.Booking;
+import com.rental.ezcars.entity.Payment;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private BookingServiceImpl bookingService;   
+    
+    @Autowired
+    private PaymentServiceImpl paymentService;   
 
     @Override
     public List<User> getAllUsers() {
@@ -101,5 +114,55 @@ public class UserServiceImpl implements UserService {
         sanitizedUser.setUpdatedAt(user.getUpdatedAt());
         sanitizedUser.setPasswordHash("XXXXXXXX");
         return sanitizedUser;
+    }
+    
+    @Override
+    public UserStatsDTO getUserStats(Long userId) {
+        User user = getUserById(userId);
+        if (user == null) {
+            return null;
+        }
+        
+        Page<Booking> bookingsPage = bookingService.getAllBookingsByUserId(
+            userId, null, null, null, "asc", 0, Integer.MAX_VALUE);
+
+        List<Booking> bookings = bookingsPage.getContent();
+
+        int totalRides = bookings.size();
+        
+        List<Long> completedBookingIds = bookings.stream()
+        	    .filter(booking -> booking.getStatus() == Booking.BookingStatus.COMPLETED)
+        	    .map(Booking::getId)
+        	    .collect(Collectors.toList());
+
+        	// Fetch payments for these completed bookings
+        	List<Payment> completedPayments = paymentService.getPaymentsByBookingIds(completedBookingIds);
+
+        	// Calculate total amount spent for completed bookings
+        	BigDecimal totalAmountSpent = completedPayments.stream()
+        	    .map(Payment::getAmount)
+        	    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        	double totalAmountSpentDouble = totalAmountSpent.doubleValue();
+        
+        int completedRides = (int) bookings.stream()
+            .filter(booking -> booking.getStatus() == Booking.BookingStatus.COMPLETED)
+            .count();
+        
+        int cancelledRides = (int) bookings.stream()
+            .filter(booking -> booking.getStatus() == Booking.BookingStatus.CANCELLED)
+            .count();
+        
+        double averageRating = 4.5;
+
+        return new UserStatsDTO(
+            user.getUserId(),
+            user.getUsername(),
+            totalRides,
+            totalAmountSpentDouble, 
+            completedRides,
+            cancelledRides,
+            averageRating
+        );
     }
 }

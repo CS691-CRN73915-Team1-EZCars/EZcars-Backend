@@ -130,7 +130,7 @@ public class EmailServiceImpl implements EmailService {
             
             // Calculate total price
             totalPrice = vehicle.getPrice() * booking.getDuration();
-            body.append("Booking Duration: ").append(booking.getDuration()).append(" days\n")
+            body.append("Booking Duration: ").append(booking.getDuration()).append(" day(s)\n")
                 .append("Total Rental Amount: $").append(String.format("%.2f", totalPrice)).append("\n\n");
         } 
 

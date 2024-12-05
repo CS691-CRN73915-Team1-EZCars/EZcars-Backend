@@ -1,5 +1,6 @@
 package com.rental.ezcars.controller;
 
+import com.rental.ezcars.dto.UserStatsDTO;
 import com.rental.ezcars.entity.User;
 import com.rental.ezcars.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,14 @@ public class UserController {
 	    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 	        userService.deleteUser(id);
 	        return ResponseEntity.ok().build();
+	    }
+	    
+	    @GetMapping("/{id}/stats")
+	    public ResponseEntity<UserStatsDTO> getUserStats(@PathVariable Long id) {
+	        UserStatsDTO stats = userService.getUserStats(id);
+	        if (stats != null) {
+	            return ResponseEntity.ok(stats);
+	        }
+	        return ResponseEntity.notFound().build();
 	    }
 	}

@@ -1,5 +1,6 @@
 package com.rental.ezcars.service;
 
+import com.rental.ezcars.dto.UserStatsDTO;
 import com.rental.ezcars.entity.User;
 import java.util.List;
 
@@ -10,4 +11,6 @@ public interface UserService {
     User updateUser(Long id, User userDetails);
     void deleteUser(Long id);
     User login(String username, String password);
+    
+    UserStatsDTO getUserStats(Long userId);
 }

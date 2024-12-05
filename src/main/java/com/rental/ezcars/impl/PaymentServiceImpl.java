@@ -67,4 +67,8 @@ public class PaymentServiceImpl implements PaymentService {
     public void deletePayment(Long paymentId) {
         paymentRepository.deleteById(paymentId);
     }
+    
+    public List<Payment> getPaymentsByBookingIds(List<Long> bookingIds) {
+        return paymentRepository.findByBookingIdIn(bookingIds);
+    }
 }

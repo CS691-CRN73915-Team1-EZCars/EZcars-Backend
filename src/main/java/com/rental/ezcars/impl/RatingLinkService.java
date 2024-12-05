@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.rental.ezcars.entity.TokenEntity;
 import com.rental.ezcars.repository.FeedbackTokens;
-import com.rental.ezcars.service.BookingService;
 
 import java.util.UUID;
 
